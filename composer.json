@@ -1,0 +1,19 @@
+{
+    "name": "jesus_sanchez/salon_belleza",
+    "description": "PHP MVC Project",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "MVC\\": "./",
+            "Controllers\\": "./controllers",
+            "Model\\": "./models"
+
+
+        }
+    },
+    "authors": [{
+        "name": "JesusSanchez23",
+        "email": "jesus8347@gmail.com"
+    }],
+    "require": {}
+}

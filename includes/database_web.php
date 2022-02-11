@@ -1,6 +1,6 @@
 <?php
 
-$db = mysqli_connect('localhost', 'root', 'root', 'blentoom_belleza');
+$db = mysqli_connect('162.241.2.36', 'blentoom_salon', 'Chocorrol99.', 'blentoom_belleza');
 
 
 if (!$db) {
