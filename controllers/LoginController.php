@@ -18,13 +18,22 @@ class LoginController
         echo 'en el logout';
     }
 
-    public static function olvide()
+    public static function olvide(Router $router)
     {
-        echo 'Olvide';
+        $router->render('auth/olvide-password',[
+            
+        ]);
     }
 
     public static function recuperar()
     {
         echo 'recuperar';
+    }
+
+    public static function crear(Router $router)
+    {
+        $router->render('auth/crear-cuenta',[
+            
+        ]);
     }
 }

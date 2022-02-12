@@ -1,6 +1,7 @@
 <h1 class="nombre-pagina">login</h1>
 <p class="descripcion-pagina">Inicia sesión con tus datos</p>
 
+
 <form action="/" class="formulario" method="POST">
     <div class="campo">
         <label for="email">Email</label>
