@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Classes\Email;
 use Model\Usuario;
 use MVC\Router;
 
@@ -47,12 +48,43 @@ class LoginController
             // revisar que $alertas este vacio
 
             if(empty($alertas)){
-                echo "Pasaste la validación";
+
+                // verificar que el usuario no este registrado
+                $resultado = $usuario->existeUsuario();
+                if($resultado->num_rows){
+                    $alertas = Usuario::getAlertas();
+                }else{
+
+                    // hashear el psw
+
+                    $usuario->hashPassword();
+                    // no esta registrado
+
+                    $usuario->crearToken();
+                    
+                    // enviar el email
+
+                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+
+                    $email->enviarConfirmacion();
+
+                    // crear el usuario
+                    $resultado = $usuario->guardar();
+
+                    if($resultado){
+                        header('location: /mensaje');
+                    }
+                
+                }
             }
         }
         $router->render('auth/crear-cuenta',[
             'usuario' => $usuario,
             'alertas' => $alertas
         ]);
+    }
+
+    public static function mensaje(Router $router){
+        $router->render('auth/mensaje');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-$db = mysqli_connect('localhost', 'root', 'root', 'blentoom_belleza');
+$db = mysqli_connect('localhost', 'root', 'root', 'appsalon_mvc');
 
 
 if (!$db) {
