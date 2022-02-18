@@ -51,4 +51,37 @@ class Email
 
         $mail->send();
     }
+
+    public function enviarInstrucciones(){
+         //crear el objeto de email
+
+         $mail = new PHPMailer();
+         $mail->isSMTP();
+         $mail->Host = 'smtp.mailtrap.io';
+         $mail->SMTPAuth = true;
+         $mail->Port = 2525;
+         $mail->Username = 'f622f30bedd912';
+         $mail->Password = '510f1c8c90ce7d';
+ 
+         $mail->setFrom('cuentas@blentoom.com');
+         $mail->addAddress('cuentas@blentoom.com', 'blentoom.com');
+         $mail->Subject = 'Restablece tu Password';
+ 
+ 
+         // set HTML
+ 
+         $mail->isHTML(TRUE);
+         $mail->CharSet = 'UTF-8';
+         $contenido = "<html>";
+         $contenido .= "<p>Hola <strong>" . $this->nombre . "</strong> has solicitado restablecer la contraseña de tu cuenta en blentoom.com solo debes de confirmar presionando el siguiente enlace </p>";
+         $contenido .= "<p>Presiona aqui <a href='http://localhost:8000/recuperar?token=".$this->token."'>Restablecer contraseña</a></p>";
+         $contenido .="<p> Si tu no silicitaste la cuenta, ignora el mensaje </p>";
+         $contenido .= "</html>";
+ 
+         $mail->Body = $contenido;
+ 
+         // Enviar el email
+ 
+         $mail->send();
+    }
 }
