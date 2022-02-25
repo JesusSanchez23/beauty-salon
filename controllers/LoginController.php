@@ -67,7 +67,8 @@ class LoginController
 
     public static function logout()
     {
-        echo 'en el logout';
+        session_destroy();
+        header('location: /');
     }
 
     public static function olvide(Router $router)
