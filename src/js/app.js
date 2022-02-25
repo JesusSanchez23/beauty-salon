@@ -3,6 +3,7 @@ let pasoInicial = 1;
 let pasoFinal = 3;
 
 const cita = {
+  id: "",
   nombre: "",
   fecha: "",
   hora: "",
@@ -20,6 +21,7 @@ function iniciarApp() {
   paginaSiguiente();
   paginaAnterior();
   consultarAPI(); //CONSULTA LA api EN EL BACKEND DE php
+  idCliente(); //consulta el id del cliente
   nombreCliente(); //añade el nombre del cliente al objeto de cita;
   seleccionarFecha(); //añade la fecha de la cita en el objeto
   seleccionarHora(); //añade la hora de la cita en el objeto
@@ -160,7 +162,12 @@ function seleccionarServicio(servicio) {
     divServicio.classList.add("seleccionado");
   }
 
-  console.log(cita);
+  // console.log(cita);
+}
+
+function idCliente() {
+  const id = document.querySelector("#id").value;
+  cita.id = id;
 }
 
 function nombreCliente() {
@@ -314,6 +321,49 @@ function mostrarResumen() {
   resumen.appendChild(botonReservar);
 }
 
-function reservarCita() {
-  console.log("reservando cita");
+async function reservarCita() {
+  const { id, nombre, fecha, hora, servicios } = cita;
+
+  const idServicios = servicios.map((servicio) => servicio.id);
+
+  const datos = new FormData();
+  datos.append("fecha", fecha);
+  datos.append("hora", hora);
+  datos.append("usuarioId", id);
+  datos.append("servicios", idServicios);
+
+  // console.log([...datos]);
+
+  try {
+    // peticion hacia la API
+    const url = "http://localhost:8000/api/citas";
+
+    const respuesta = await fetch(url, {
+      method: "POST",
+      body: datos,
+    });
+
+    const resultado = await respuesta.json();
+    console.log(resultado.resultado);
+
+    if (resultado.resultado) {
+      Swal.fire({
+        icon: "success",
+        title: "Cita Creada",
+        text: "Datos registrados!",
+        button: "OK",
+      }).then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+      });
+    }
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Algo salio mal :( ...",
+      text: "error al registrar la cita!",
+      button: "OK",
+    });
+  }
 }
