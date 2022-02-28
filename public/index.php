@@ -45,6 +45,8 @@ $router->get('/admin',[AdminController::class,'index']);
 // API DE CITAS
 $router->get('/api/servicios',[APIController::class,'index']);
 $router->post('/api/citas',[APIController::class,'guardar']);
+$router->post('/api/eliminar',[APIController::class, 'eliminar']);
+
 
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador

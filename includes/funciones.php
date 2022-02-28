@@ -19,3 +19,17 @@ if(!isset($_SESSION['login'])){
     header('location: /');
 };
 }
+
+
+function esUltimo(String $actual, String $proximo):bool{
+ if($actual !== $proximo){
+     return true;
+ }
+ return false;
+}
+
+function isAdmin() : void{
+ if(!isset($_SESSION['admin'])){
+     header('Location: /');
+ }
+}

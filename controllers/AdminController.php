@@ -12,7 +12,18 @@ class AdminController
         if(!isset($_SESSION)){
             session_start();
         }
+ isAdmin();
 
+        $fecha = date('Y-m-d');
+
+        $fechaSeleccionada = $_GET['fecha'] ?? $fecha;
+
+        $fechas = explode('-', $fechaSeleccionada);
+
+        if(!checkdate($fechas[1],$fechas[2], $fechas[0])){
+            header('location: /404');
+        }
+    
 
         // consultar la base de datos
         $consulta = "SELECT citas.id, citas.hora, CONCAT(usuarios.nombre,' ',usuarios.apellido) as cliente, ";
@@ -23,18 +34,20 @@ class AdminController
         $consulta .="LEFT OUTER JOIN citasServicios ";
         $consulta .= "ON citasServicios.citaId = citas.id ";
         $consulta .= "LEFT OUTER JOIN servicios ";
-        $consulta .= "ON servicios.id = citasServicios.servicioId";
-        // $consulta .= "WHERE fecha = '${fecha}'";
+        $consulta .= "ON servicios.id = citasServicios.servicioId ";
+        $consulta .= "WHERE fecha = '${fechaSeleccionada}'";
         
 
         $citas = AdminCita::SQL($consulta);
 
    
-        debuguear($citas);
+     
 
         $router->render('admin/index', [
             'nombre' => $_SESSION['nombre'],
-            'citas' => $citas
+            'citas' => $citas,
+            'fecha' => $fecha,
+            'fechaSeleccionada' => $fechaSeleccionada
         ]);
     }
 }
