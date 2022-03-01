@@ -1,6 +1,6 @@
 <?php
 
-$db = mysqli_connect('162.241.2.36', 'blentoom_belleza', 'Chocorrol99.', 'blentoom_belleza');
+$db = mysqli_connect('localhost', 'user', 'psw.', 'db');
 $db->set_charset('utf8');
 
 if (!$db) {
