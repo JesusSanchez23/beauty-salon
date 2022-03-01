@@ -28,3 +28,17 @@
         }
     }
 }
+
+.servicios{
+    @extend .citas;
+
+    .acciones{
+        margin: 0;
+    }
+
+    .boton, .boton-eliminar{
+        @include m.tablet{
+            margin: 0;
+        }
+    }
+}
